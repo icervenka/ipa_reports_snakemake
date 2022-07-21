@@ -32,6 +32,7 @@ rule ipa:
         regulators=REPORT_OUTDIR + "{contrast}/" + "upstream_regulators.txt",
         functions=REPORT_OUTDIR + "{contrast}/" + "diseases_functions.txt"
     params:
+        pandoc_path=config["pandoc_path"],
         canonical_string=config["parse_strings"]["canonical"],
         upstream_string=config["parse_strings"]["upstream"],
         disease_string=config["parse_strings"]["disease"],

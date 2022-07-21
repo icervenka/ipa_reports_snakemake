@@ -1,4 +1,6 @@
 name: "Project"
+
+pandoc_path: "/usr/lib/rstudio-server/bin/quarto/bin/tools"
 threads: 15
 create_archive: "yes"
 # # should the html output be self contained or have a separate lib directory

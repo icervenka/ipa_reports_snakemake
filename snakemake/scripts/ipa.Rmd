@@ -33,7 +33,7 @@ upstream_graph
 
 ```{r upstream_table, echo=FALSE}
 display_df = upstream_df %>% select(c(-1, -7))
-columns_defs = list(list(width = '30%', target = 10))
+columns_defs = list(list(width = '30%', targets = 10))
 DT::datatable(display_df, options = list(autoWidth = FALSE, columnDefs = columns_defs), caption="IPA Upstream regulators")
 ```
 
@@ -45,6 +45,6 @@ disease_graph
 
 ```{r disease_table, echo=FALSE}
 display_df = disease_df %>% select(c(-2))
-columns_defs = list(list(width = '30%', target = 2))
+columns_defs = list(list(width = '30%', targets = 2))
 DT::datatable(display_df, options = list(autoWidth = FALSE, columnDefs = columns_defs), caption="IPA Diseases and Functions")
 ```
