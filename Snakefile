@@ -21,7 +21,8 @@ rule all:
         expand(REPORT_OUTDIR + "{contrast}/" + "ipa.html", contrast=Inputs),
         expand(REPORT_OUTDIR + "{contrast}/" + "canonical_pathways.txt", contrast=Inputs),
         expand(REPORT_OUTDIR + "{contrast}/" + "upstream_regulators.txt", contrast=Inputs),
-        expand(REPORT_OUTDIR + "{contrast}/" + "diseases_functions.txt", contrast=Inputs)
+        expand(REPORT_OUTDIR + "{contrast}/" + "diseases_functions.txt", contrast=Inputs),
+        expand(ARCHIVE_OUTDIR + NOW + "_" + "{contrast}" + "_result_archive.tar.gz")
 
 rule ipa:
     input:
@@ -44,6 +45,18 @@ rule ipa:
         upstream_pval_threshold=config["upstream"]["graph_pval_threshold"],
         upstream_zscore_threshold=config["upstream"]["graph_zscore_threshold"],
         disease_pval_threshold=config["disease"]["graph_pval_threshold"],
-        disease_zscore_threshold=config["disease"]["graph_zscore_threshold"]
+        disease_zscore_threshold=config["disease"]["graph_zscore_threshold"],
+        self_contained=config['self_contained']
     script:
         "snakemake/scripts/ipa.R"
+
+rule result_archive:
+    input:
+        rules.ipa.output
+    output:
+        ARCHIVE_OUTDIR + NOW + "_" + "{contrast}" + "_result_archive.tar.gz"
+    params:
+        ARCHIVE_OUTDIR
+    shell:
+        input_string = " ".join(input)
+        "tar -czf {output} {input_string} -C {params}"

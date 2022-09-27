@@ -196,6 +196,7 @@ parse_strings = list(
   molecules=snakemake@params[["molecules_string"]]
 )
 
+# KEEP FOR DEBUGGING FOR NOW
 # setwd("~/programming/analysis_pipeline/input/")
 # filename = "ipa_alpha1_gfp_nervous.txt"
 #canonical_nitems = 20
@@ -229,6 +230,13 @@ write.table(canonical_df, snakemake@output[[2]], sep = '\t', quote = F, row.name
 write.table(upstream_df, snakemake@output[[3]], sep = '\t', quote = F, row.names = F)
 write.table(disease_df, snakemake@output[[4]], sep = '\t', quote = F, row.names = F)
 
+knitr_output_options = list(
+  mathjax = NULL,
+  self_contained = snakemake@params[["self_contained"]]#,
+  # lib_dir = paste0(outdir, "/libs")
+)
+
 rmarkdown::render("snakemake/scripts/ipa.Rmd",
                   output_file = paste0("../../", snakemake@output[[1]]),
-                  output_format = "html_document")
+                  output_format = "html_document",
+                  output_options = knitr_output_options)
